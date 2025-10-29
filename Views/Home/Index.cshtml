@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h1>@ViewBag.Productos.Count</h1>
+    <ul>
+        @foreach(ProductosExternosMVC.Services.ProductoDto producto in ViewBag.Productos)
+        {
+            <li>@producto.Nombre - @producto.Precio</li>
+        }
+    </ul>
+</div>
