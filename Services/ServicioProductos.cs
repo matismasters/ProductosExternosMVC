@@ -11,7 +11,7 @@ namespace ProductosExternosMVC.Services
 {
     public interface IServicioProductos
     {
-        Task CrearProducto(string nombre, string precio);
+        Task<ProductoDto> CrearProducto(string nombre, string precio);
         Task BuscarMostrar(string id);
         Task<ProductoDto> Buscar(string id);
         Task Borrar(string id);
@@ -109,7 +109,7 @@ namespace ProductosExternosMVC.Services
                 Console.WriteLine($"Error al buscar el producto: {response.StatusCode}");
             }
         }
-        public async Task CrearProducto(string nombre, string precio)
+        public async Task<ProductoDto?> CrearProducto(string nombre, string precio)
         {
             ProductoDto nuevoProducto = new ProductoDto
             {
@@ -127,11 +127,13 @@ namespace ProductosExternosMVC.Services
             {
                 string respuestaJson = await response.Content.ReadAsStringAsync();
                 ProductoDto productoCreado = JsonSerializer.Deserialize<ProductoDto>(respuestaJson)!;
-                Console.WriteLine($"Producto creado con ID: {productoCreado.Id}");
+
+                return productoCreado;
             }
             else
             {
                 Console.WriteLine($"Error al crear el producto: {response.StatusCode}");
+                return null;
             }
         }
         public async Task<List<ProductoDto>> Todos()

@@ -22,6 +22,17 @@ namespace ProductosExternosMVC.Controllers
 
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> CrearProducto(CrearProductoDto _crearProductoDto)
+        {
+            // Validaciones varias
+            // ....
+
+            ServicioProductos servicioProductos = new ServicioProductos();
+            ProductoDto? producto = await servicioProductos.CrearProducto(_crearProductoDto.nombre, _crearProductoDto.precio);
+
+            return RedirectToAction("Index");
+        }
 
         public IActionResult Privacy()
         {

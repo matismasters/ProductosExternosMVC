@@ -5,6 +5,17 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <h1>@ViewBag.Productos.Count</h1>
+    <form method="post" action="/Home/CrearProducto">
+        <label>Nombre:
+            <input type="text" name="nombre" placeholder="Nombre del producto" required />
+        </label>
+
+        <label>Precio:
+            <input type="number" name="precio" placeholder="Precio" required />
+        </label>
+
+        <button type="submit">Crear Producto</button>
+    </form>
     <ul>
         @foreach(ProductosExternosMVC.Services.ProductoDto producto in ViewBag.Productos)
         {
