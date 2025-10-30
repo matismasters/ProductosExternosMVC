@@ -29,7 +29,18 @@ namespace ProductosExternosMVC.Controllers
             // ....
 
             ServicioProductos servicioProductos = new ServicioProductos();
-            ProductoDto? producto = await servicioProductos.CrearProducto(_crearProductoDto.nombre, _crearProductoDto.precio);
+            ProductoDto? producto = await servicioProductos.Crear(_crearProductoDto.nombre, _crearProductoDto.precio);
+
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> BorrarProducto(BorrarProductoDto _borrarProductoDto)
+        {
+            // Validaciones varias
+            // ....
+
+            ServicioProductos servicioProductos = new ServicioProductos();
+            await servicioProductos.Borrar(_borrarProductoDto.id);
 
             return RedirectToAction("Index");
         }

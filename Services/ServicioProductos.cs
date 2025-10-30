@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Text.Json;
@@ -11,7 +12,7 @@ namespace ProductosExternosMVC.Services
 {
     public interface IServicioProductos
     {
-        Task<ProductoDto> CrearProducto(string nombre, string precio);
+        Task<ProductoDto> Crear(string nombre, string precio);
         Task BuscarMostrar(string id);
         Task<ProductoDto> Buscar(string id);
         Task Borrar(string id);
@@ -109,7 +110,7 @@ namespace ProductosExternosMVC.Services
                 Console.WriteLine($"Error al buscar el producto: {response.StatusCode}");
             }
         }
-        public async Task<ProductoDto?> CrearProducto(string nombre, string precio)
+        public async Task<ProductoDto?> Crear(string nombre, string precio)
         {
             ProductoDto nuevoProducto = new ProductoDto
             {

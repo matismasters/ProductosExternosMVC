@@ -19,7 +19,13 @@
     <ul>
         @foreach(ProductosExternosMVC.Services.ProductoDto producto in ViewBag.Productos)
         {
-            <li>@producto.Nombre - @producto.Precio</li>
+            <li>
+                <span>@producto.Nombre - @producto.Precio</span>
+                <form method="post" action="/Home/BorrarProducto">
+                    <input type="hidden" name="id" value="@producto.Id" />
+                    <button type="submit">Borrar</button>
+                </form>
+            </li>
         }
     </ul>
 </div>
