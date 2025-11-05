@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ProductosExternosMVC.Models;
 
 namespace ProductosExternosMVC.Services
 {
@@ -44,7 +45,7 @@ namespace ProductosExternosMVC.Services
 
         public ServicioProductos()
         {
-            _apiUrl = "https://68ffe1e9e02b16d1753f8cfe.mockapi.io/api/v1/productos";
+            _apiUrl = "http://localhost:5114/api/Productos";
             _httpClient = new HttpClient();
         }
 
@@ -112,11 +113,11 @@ namespace ProductosExternosMVC.Services
         }
         public async Task<ProductoDto?> Crear(string nombre, string precio)
         {
-            ProductoDto nuevoProducto = new ProductoDto
+            DetalleProductoDto nuevoProducto = new DetalleProductoDto
             {
-                Nombre = nombre,
-                Precio = precio,
-                CreatedAt = DateTime.UtcNow.ToString("o")
+                nombre = nombre,
+                precio = precio,
+                createdAt = DateTime.UtcNow.ToString("o")
             };
 
             string json = JsonSerializer.Serialize(nuevoProducto);
@@ -124,18 +125,10 @@ namespace ProductosExternosMVC.Services
 
             HttpResponseMessage response = await _httpClient.PostAsync(_apiUrl, content);
 
-            if (response.IsSuccessStatusCode)
-            {
-                string respuestaJson = await response.Content.ReadAsStringAsync();
-                ProductoDto productoCreado = JsonSerializer.Deserialize<ProductoDto>(respuestaJson)!;
+            string respuestaJson = await response.Content.ReadAsStringAsync();
+            ProductoDto productoCreado = JsonSerializer.Deserialize<ProductoDto>(respuestaJson)!;
 
-                return productoCreado;
-            }
-            else
-            {
-                Console.WriteLine($"Error al crear el producto: {response.StatusCode}");
-                return null;
-            }
+            return productoCreado;
         }
         public async Task<List<ProductoDto>> Todos()
         {
